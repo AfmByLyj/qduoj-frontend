@@ -6,7 +6,6 @@ const path = require('path')
 const commonProxy = {
   onProxyReq: (proxyReq, req, res) => {
     // proxyReq.setHeader('Referer', process.env.TARGET)
-    // proxyReq.setHeader('Referer', 'http://47.97.43.215')
     proxyReq.setHeader('Referer', 'http://127.0.0.1')
   },
   // target: process.env.TARGET,

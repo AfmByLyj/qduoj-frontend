@@ -742,7 +742,7 @@
       }
     }
     p.content {
-
+      text-align: center;
       margin-left: 25px;
       margin-right: 20px;
       font-size: 15px;
