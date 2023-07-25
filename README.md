@@ -1,16 +1,45 @@
 # OnlineJudge Front End
-1. 增加首页周榜（随便塞的
-1. 问题界面更新
-  - 增加
-    - 提交反馈
-  - 更改
-    - 问题界面格式化
-    - 时空限制和IO模式位置调整
-    - 竞赛中的难度和标签隐藏
-  - 删除
-    - 题目信息中的ID、出题人
-1. 提交状态列表界面更新，删除ID
-1. 管理员竞赛列表增加删除按钮
+<details>
+  <summary>增加首页周榜</summary>
+  <ul><li>随便塞的</li></ul>
+</details>
+<details>
+  <summary>问题界面更新</summary>
+  <ul>
+    <li>
+      <details>
+        <summary>增加</summary>
+        <ul>
+          <li>提交反馈</li>
+        </ul>
+      </details>
+    </li>
+    <li>
+      <details>
+        <summary>更改</summary>
+        <ul>
+          <li>问题界面格式化</li>
+          <li>时空限制和IO模式位置调整</li>
+          <li>竞赛中的难度和标签隐藏</li>
+        </ul>
+      </details>
+    </li>
+    <li>
+      <details>
+        <summary>删除</summary>
+        <ul>
+          <li>题目信息中的ID、出题人</li>
+        </ul>
+      </details>
+    </li>
+  </ul>
+</details>
+<details>
+  <summary>提交状态列表界面更新，删除ID</summary>
+</details>
+<details>
+  <summary>管理员竞赛列表增加删除按钮</summary>
+</details>
 
 ## Get Started
 
