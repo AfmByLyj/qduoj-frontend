@@ -128,7 +128,7 @@
             {{ $t('m.' + submissionStatus.text.replace(/ /g, "_")) }}
             </Tag>
             <div>
-              <div v-for="sr in showResult().out">
+              <div v-for="sr in showResult().out" class="showns">
                 <span>{{ sr[0] }}</span>
                 <pre class="outshown">{{ sr[1] }}</pre>
               </div>
@@ -345,7 +345,7 @@
         submitting: false,
         code: '',
         language: 'C++',
-        theme: 'solarized',
+        theme: 'idea',
         submissionId: '',
         submitted: false,
         result: {
@@ -718,6 +718,7 @@
   .flex-container {
     #problem-main {
       flex: auto;
+      width: 500px;
       margin-left: 100px;
       margin-right: 18px;
     }
@@ -737,12 +738,12 @@
     .title {
       font-size: 20px;
       color: #3091f2;
+      text-align: center;
       .copy {
         padding-left: 8px;
       }
     }
     p.content {
-      text-align: center;
       margin-left: 25px;
       margin-right: 20px;
       font-size: 15px;
@@ -873,10 +874,14 @@
     border: 1px solid black;
     box-shadow: inset 0 0 5px rgb(94, 93, 93);
     min-height: 80px;
+    max-height: 200px;
     padding-left: 8px;
     padding-right: 8px;
     font-size: 16px;
+    max-width: 100%;
+    overflow-x: auto;
   }
+
 
 </style>
 

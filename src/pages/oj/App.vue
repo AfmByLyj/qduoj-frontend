@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NavBar></NavBar>
+    <NavBar class="navBar"></NavBar>
     <div class="content-app">
       <transition name="fadeInUp" mode="out-in">
         <router-view></router-view>
@@ -97,6 +97,5 @@
   .fadeInUp-enter-active {
     animation: fadeInUp .8s;
   }
-
 
 </style>

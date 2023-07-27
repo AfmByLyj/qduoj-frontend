@@ -1,5 +1,5 @@
 <template>
-  <pre v-highlight="code"><code :class="language" :style="styleObject"></code></pre>
+  <pre v-highlight="code" style="tab-size: 4;"><code :class="language" :style="styleObject"></code></pre>
 </template>
 
 <script>

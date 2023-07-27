@@ -1,7 +1,7 @@
 # OnlineJudge Front End
 <details>
   <summary>增加首页周榜</summary>
-  <ul><li>随便塞的</li></ul>
+  <ul><li>界面优化</li></ul>
 </details>
 <details>
   <summary>问题界面更新</summary>
@@ -11,6 +11,7 @@
         <summary>增加</summary>
         <ul>
           <li>提交反馈</li>
+          <li>在线IDE括号自动匹配，主题更新</li>
         </ul>
       </details>
     </li>
@@ -35,10 +36,17 @@
   </ul>
 </details>
 <details>
-  <summary>提交状态列表界面更新，删除ID</summary>
+  <summary>提交信息</summary>
+  <ul>
+    <li>详细页代码中制表符大小更改</li>
+    <li>提交状态列表界面更新，删除ID</li>
+  </ul>
 </details>
 <details>
-  <summary>管理员竞赛列表增加删除按钮</summary>
+  <summary>管理员界面</summary>
+  <ul>
+    <li>管理员竞赛列表增加删除按钮</li>
+  </ul>
 </details>
 
 ## Get Started

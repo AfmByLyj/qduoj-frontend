@@ -43,6 +43,7 @@
   import 'codemirror/theme/monokai.css'
   import 'codemirror/theme/solarized.css'
   import 'codemirror/theme/material.css'
+  import 'codemirror/theme/idea.css'
 
   // mode
   import 'codemirror/mode/clike/clike.js'
@@ -58,6 +59,12 @@
   import 'codemirror/addon/fold/foldgutter.js'
   import 'codemirror/addon/fold/brace-fold.js'
   import 'codemirror/addon/fold/indent-fold.js'
+  // 括号自动匹配
+  import 'codemirror/addon/edit/matchbrackets'
+  import 'codemirror/addon/edit/closebrackets'
+  // 代码提示
+  import 'codemirror/addon/hint/show-hint.css'
+  import 'codemirror/addon/hint/show-hint'
 
   export default {
     name: 'CodeMirror',
@@ -81,18 +88,19 @@
       },
       theme: {
         type: String,
-        default: 'solarized'
+        default: 'idea'
       }
     },
     data () {
       return {
         options: {
           // codemirror options
-          tabSize: 2,
+          tabSize: 4,
           smartIndent: true,
-          indentUnit: 2,
-          mode: 'clike',
-          theme: 'solarized',
+          indentUnit: 4,
+          indentWithTabs: true,
+          mode: 'text/clike',
+          theme: 'idea',
           lineNumbers: true,
           line: true,
           // 代码折叠
@@ -100,21 +108,28 @@
           gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
           // 选中文本自动高亮，及高亮方式
           styleSelectedText: true,
+          styleActiveLine: true,
           lineWrapping: true,
           highlightSelectionMatches: {showToken: /\w/, annotateScrollbar: true},
           matchBrackets: true,
-          showCursorWhenSelecting: true
+          autoCloseBrackets: true,
+          showCursorWhenSelecting: true,
+          hintOptions: {
+            completeSingle: false,
+            hint: this.handleShowHint
+          }
         },
         mode: {
-          'C': 'clike',
-          'C++': 'clike',
-          'Java': 'clike',
-          'Python2': 'python',
-          'Python3': 'python',
-          'Javascript': 'javascript',
-          'Golang': 'go'
+          'C': 'text/clike',
+          'C++': 'text/clike',
+          'Java': 'text/clike',
+          'Python2': 'text/python',
+          'Python3': 'text/python',
+          'Javascript': 'text/javascript',
+          'Golang': 'text/go'
         },
         themes: [
+          {label: 'idea', value: 'idea'},
           {label: this.$i18n.t('m.Monokai'), value: 'monokai'},
           {label: this.$i18n.t('m.Solarized_Light'), value: 'solarized'},
           {label: this.$i18n.t('m.Material'), value: 'material'}

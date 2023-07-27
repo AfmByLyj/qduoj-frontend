@@ -1,5 +1,5 @@
 <template>
-  <div style="display: flex;">
+  <div style="display: flex; justify-content: center;">
     <div id="echarts">
       <ECharts :options="options" ref="chart" auto-resize></ECharts>
     </div>
@@ -15,14 +15,14 @@
       <div id="alls">
         <table>
           <tr v-for="wr, indexs in weekRank">
-            <td>{{ indexs + 1 }}</td>
-            <td style="width: 50px; height: 50px;">
-              <div style="height: 100%; display: flex; align-items: center;">
+            <td style="width: 30px; text-align: center;">{{ indexs + 1 }}</td>
+            <td style="width: 50px; height: 60px;">
+              <div style="height: 100%; display: flex; align-items: center;" @click="jump(wr.userName)">
                 <img :src="wr.avatar" style="width: 40px; height: 40px;" class="avatar">
               </div>
             </td>
             <td>
-              <div class="uname">{{ wr.userName }}</div>
+              <div class="uname" @click="jump(wr.userName)">{{ wr.userName }}</div>
               <div>AC: {{ wr.acNum }}</div>
             </td>
           </tr>
@@ -144,7 +144,6 @@
 <style scoped>
   table {
     border-collapse: collapse;
-    margin: 5px;
   }
 
   td {
@@ -156,32 +155,59 @@
     justify-content: center;
     align-items: center;
     min-height: 300px;
-    height: 500px;
+    height: 620px;
+    border-radius: 20px;
+    background-color: #fafafa;
+    width: 750px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   }
   #ranks {
-    height: 500px;
-    width: 200px;
+    height: 600px;
+    width: 300px;
     position: relative;
-    top: 10px;
+    left: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   #alls {
-    height: 300px;
-    width: 200px;
+    height: 420px;
+    width: 300px;
     position: relative;
     top: 20px;
     border-radius: 20px;
     background-color: #fafafa;
     overflow: hidden;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   }
 
   #Top3 {
-    width: 200px;
-    height: 160px;
+    width: 300px;
+    height: 200px;
+    position: relative;
+    /* overflow: hidden; */
+    /* border: 1px solid black; */
+    background-image: url('./trangle.png');
+    background-size: cover;
+    background-position: center;
   }
 
+  /* #Top3::before {
+    content: '';
+    display: block;
+    width: 300px;
+    height: 300px;
+    top: 20px;
+    left: 0px;
+    border-radius: 100px;
+    position: absolute;
+    transform: rotate(45deg);
+    background-color: orange;
+  } */
+
   .pre {
-    position: relative;
+    position: absolute;
     width: 60px;
     height: 80px;
     cursor: pointer;
@@ -189,6 +215,7 @@
   }
 
   .uname {
+    cursor: pointer;
     width: 60px;
     color: rgb(255, 161, 22);
   }
@@ -211,15 +238,22 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.08);
+    box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.2);
   }
 
   .pre:nth-child(1) {
-    left: 70px;
+    top: 5%;
+    left: calc(50% - 30px);
   }
 
   .pre:nth-child(1) .preimg {
     background: linear-gradient(180deg, #e7e78b, #cbb508);
+  }
+
+  .pre:nth-child(2) {
+    /* left: calc(25% - 30px); */
+    left: 5%;
+    bottom: 0;
   }
 
   .pre:nth-child(2) .preimg {
@@ -227,8 +261,9 @@
   }
 
   .pre:nth-child(3) {
-    left: 140px;
-    top: -80px;
+    /* right: calc(25% - 30px); */
+    right: 5%;
+    bottom: 0;
   }
 
   .pre:nth-child(3) .preimg {
@@ -239,5 +274,6 @@
     border-radius: 50%;
     border-width: 5px;
     border-style: solid;
+    cursor: pointer;
   }
 </style>

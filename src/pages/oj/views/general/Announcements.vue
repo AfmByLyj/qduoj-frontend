@@ -1,5 +1,11 @@
 <template>
   <Panel shadow :padding="10">
+    <Pagination v-if="!isContest"
+                  key="page"
+                  :total="total"
+                  :page-size="limit"
+                  @on-change="getAnnouncementList">
+      </Pagination>
     <div slot="title">
       {{title}}
     </div>
@@ -23,12 +29,6 @@
             </div>
           </li>
         </ul>
-        <Pagination v-if="!isContest"
-                    key="page"
-                    :total="total"
-                    :page-size="limit"
-                    @on-change="getAnnouncementList">
-        </Pagination>
       </template>
 
       <template v-else>

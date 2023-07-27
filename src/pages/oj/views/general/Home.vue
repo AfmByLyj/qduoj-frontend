@@ -27,7 +27,7 @@
       </Carousel>
     </panel>
     <Announcements class="announcement"></Announcements>
-    <WeekRank></WeekRank>
+    <WeekRank class="weekRank"></WeekRank>
     </Col>
   </Row>
 </template>
@@ -73,6 +73,8 @@
 
 <style lang="less" scoped>
   .contest {
+    margin-left: 5%;
+    width: 90%;
     &-title {
       font-style: italic;
       font-size: 21px;
@@ -87,5 +89,13 @@
 
   .announcement {
     margin-top: 20px;
+    margin-left: 5%;
+    width: 90%;
   }
+
+  .weekRank {
+    margin-top: 40px;
+    margin-right: 5%;
+  }
+
 </style>
