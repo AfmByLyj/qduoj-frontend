@@ -269,6 +269,11 @@ export default {
       data
     })
   },
+  addRLscoreInContest (params) {
+    return ajax('admin/addRLScore', 'get', {
+      params
+    })
+  },
   getDayRank (timeframe) {
     let params = {
       time_frame: timeframe

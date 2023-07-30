@@ -18,6 +18,9 @@
                   <span id="countdown">{{countdown}}</span>
                 </Tag>
               </div>
+              <div v-if="!RLScoreBool && this.isContestAdmin">
+                <Button type="info" @click="settle_score">Settlement score</Button>
+              </div>
               <div v-html="contest.description" class="markdown-body"></div>
               <div v-if="passwordFormVisible" class="contest-password">
                 <Input v-model="contestPassword" type="password"
@@ -26,7 +29,7 @@
                 <Button type="info" @click="checkPassword">Enter</Button>
               </div>
             </Panel>
-            <Table :columns="columns" :data="contest_table" disabled-hover style="margin-bottom: 40px;"></Table>
+            <Table :columns="columns" :data="cdata" disabled-hover style="margin-bottom: 40px;"></Table>
           </div>
         </template>
       </div>
@@ -88,11 +91,13 @@
     components: {},
     data () {
       return {
+        RLScoreBool: true,
         CONTEST_STATUS: CONTEST_STATUS,
         route_name: '',
         btnLoading: false,
         contestID: '',
         contestPassword: '',
+        cdata: [],
         columns: [
           {
             title: this.$i18n.t('m.StartAt'),
@@ -109,7 +114,7 @@
           {
             title: this.$i18n.t('m.ContestType'),
             render: (h, params) => {
-              return h('span', this.$i18n.t('m.' + params.row.contest_type ? params.row.contest_type.replace(' ', '_') : ''))
+              return h('span', this.$i18n.t('m.' + params.row.contest_type))
             }
           },
           {
@@ -133,6 +138,9 @@
       this.$store.dispatch('getContest').then(res => {
         this.changeDomTitle({title: res.data.data.title})
         let data = res.data.data
+        data.contest_type = data.contest_type.replace(' ', '_')
+        this.cdata.push(data)
+        this.RLScoreBool = data.RL_add
         let endTime = moment(data.end_time)
         if (endTime.isAfter(moment(data.now))) {
           this.timer = setInterval(() => {
@@ -158,6 +166,16 @@
           this.btnLoading = false
         }, (res) => {
           this.btnLoading = false
+        })
+      },
+      settle_score () {
+        let params = {
+          id: this.contestID
+        }
+        api.addRLscoreInContest(params).then(res => {
+          this.$success('Settled!')
+        }, err => {
+          this.$error(err)
         })
       }
     },

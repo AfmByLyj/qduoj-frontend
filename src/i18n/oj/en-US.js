@@ -259,5 +259,6 @@ export const m = {
   List_Solved_Problems: 'List of solved problems',
   UserHomeIntro: 'The guy is so lazy that has not solved any problem yet.',
   subStatus: 'Test result',
-  AcNum: 'Ac Submissions'
+  AcNum: 'Ac Submissions',
+  WeeklySubmissionRank: 'Weekly submission ranking'
 }

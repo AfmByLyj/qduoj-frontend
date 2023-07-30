@@ -259,5 +259,6 @@ export const m = {
   List_Solved_Problems: '已完成題目的列表',
   UserHomeIntro: '這個使用者尚未解題...',
   subStatus: '測試點資訊',
-  AcNum: '通過的提交'
+  AcNum: '通過的提交',
+  WeeklySubmissionRank: '7日提交榜'
 }

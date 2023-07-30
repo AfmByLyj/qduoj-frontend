@@ -91,7 +91,7 @@
         problemTableColumns: [
           {
             title: '#',
-            key: '_id',
+            key: 'id',
             width: 80,
             render: (h, params) => {
               return h('Button', {
@@ -101,13 +101,13 @@
                 },
                 on: {
                   click: () => {
-                    this.$router.push({name: 'problem-details', params: {problemID: params.row._id}})
+                    this.$router.push({name: 'problem-details', params: {problemID: params.row.id}})
                   }
                 },
                 style: {
                   padding: '2px 0'
                 }
-              }, params.row._id)
+              }, params.row.id)
             }
           },
           {
@@ -155,6 +155,22 @@
             title: this.$i18n.t('m.AC_Rate'),
             render: (h, params) => {
               return h('span', this.getACRate(params.row.accepted_number, params.row.submission_number))
+            }
+          },
+          {
+            title: 'RL score',
+            render: (h, params) => {
+              let t = params.row.get_score
+              let col = 'green'
+              if (t === null) return undefined
+              else if (t >= 0) t = '+' + t
+              else col = 'red'
+              return h('h3', {
+                style: {
+                  textAlign: 'left',
+                  color: col
+                }
+              }, t)
             }
           }
         ],

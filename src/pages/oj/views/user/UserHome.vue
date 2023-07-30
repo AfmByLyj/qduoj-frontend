@@ -6,8 +6,12 @@
     <Card :padding="100">
       <div v-if="profile.user">
         <p style="margin-top: -10px">
-          <span v-if="profile.user" class="emphasis">{{profile.user.username}}</span>
+          <span v-if="profile.userSpan" class="emphasis" v-html="profile.userSpan"></span>
           <span v-if="profile.school">@{{profile.school}}</span>
+        </p>
+        <p style="font-size: 1.2em;">
+          RL_score: 
+          <span style="font-weight: bolder; color: blueviolet;">{{ profile.RL_score }}</span>
         </p>
         <p v-if="profile.mood">
           {{profile.mood}}

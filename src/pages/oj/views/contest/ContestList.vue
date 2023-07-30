@@ -67,6 +67,7 @@
             </ul>
             </Col>
             <Col :span="4" style="text-align: center">
+            <p :style="{'color': contest.score_color}">{{ contest.RL_score_get }}</p>
             <Tag type="dot" :color="CONTEST_STATUS_REVERSE[contest.status].color">{{$t('m.' + CONTEST_STATUS_REVERSE[contest.status].name.replace(/ /g, "_"))}}</Tag>
             </Col>
           </Row>
@@ -116,6 +117,13 @@
         next((vm) => {
           vm.contests = res.data.data.results
           vm.total = res.data.data.total
+          for (let i in vm.contests) {
+            vm.contests[i].score_color = 'green'
+            if (vm.contests[i].RL_score_get !== null) {
+              if (vm.contests[i].RL_score_get >= 0) vm.contests[i].RL_score_get = '+' + vm.contests[i].RL_score_get
+              else vm.contests[i].score_color = 'red'
+            }
+          }
         })
       }, (res) => {
         next()
@@ -133,9 +141,17 @@
       },
       getContestList (page = 1) {
         let offset = (page - 1) * this.limit
+        console.log(1)
         api.getContestList(offset, this.limit, this.query).then((res) => {
           this.contests = res.data.data.results
           this.total = res.data.data.total
+          for (let i in this.contests) {
+            this.contests[i].score_color = 'green'
+            if (this.contests[i].RL_score_get !== null) {
+              if (this.contests[i].RL_score_get >= 0) this.contests[i].RL_score_get = '+' + this.contests[i].RL_score_get
+              else this.contests[i].score_color = 'red'
+            }
+          }
         })
       },
       changeRoute () {

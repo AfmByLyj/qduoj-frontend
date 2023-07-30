@@ -122,24 +122,24 @@
               this.columns.push(scoreColumn)
               this.loadingTable = false
             }
-            if (!this.isAdminRole) {
-              this.isConcat = true
-              const adminColumn = [
-                {
-                  title: this.$i18n.t('m.Real_Time'),
-                  align: 'center',
-                  render: (h, params) => {
-                    return h('span', utils.submissionTimeFormat(params.row.real_time))
-                  }
-                },
-                {
-                  title: this.$i18n.t('m.Signal'),
-                  align: 'center',
-                  key: 'signal'
-                }
-              ]
-              this.columns = this.columns.concat(adminColumn)
-            }
+            // if (!this.isAdminRole) {
+            //   this.isConcat = true
+            //   const adminColumn = [
+            //     {
+            //       title: this.$i18n.t('m.Real_Time'),
+            //       align: 'center',
+            //       render: (h, params) => {
+            //         return h('span', utils.submissionTimeFormat(params.row.real_time))
+            //       }
+            //     },
+            //     {
+            //       title: this.$i18n.t('m.Signal'),
+            //       align: 'center',
+            //       key: 'signal'
+            //     }
+            //   ]
+            //   this.columns = this.columns.concat(adminColumn)
+            // }
           }
           this.submission = data
         }, () => {

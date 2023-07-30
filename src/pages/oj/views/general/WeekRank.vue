@@ -1,32 +1,37 @@
 <template>
-  <div style="display: flex; justify-content: center;">
-    <div id="echarts">
-      <ECharts :options="options" ref="chart" auto-resize></ECharts>
-    </div>
-    <div id="ranks">
-      <div id="Top3">
-        <div v-for="i in Math.min(3, weekRank.length)" @click="jump(weekRank[i - 1].userName)" class="pre">
-          <div class="preimg">
-            <img :src="weekRank[i - 1].avatar" style="width: 50px; height: 50px;" class="avatar">
-          </div>
-          <div class="uname">{{ weekRank[i - 1].userName }}</div>
+  <div>
+    <div style="display: flex; justify-content: center;">
+      <div id="echarts">
+        <div>
+          <div style="font-size: larger; font-weight: bolder;">{{ $t('m.WeeklySubmissionRank') }}</div>
+          <ECharts :options="options" ref="chart" auto-resize></ECharts>
         </div>
       </div>
-      <div id="alls">
-        <table>
-          <tr v-for="wr, indexs in weekRank">
-            <td style="width: 30px; text-align: center;">{{ indexs + 1 }}</td>
-            <td style="width: 50px; height: 60px;">
-              <div style="height: 100%; display: flex; align-items: center;" @click="jump(wr.userName)">
-                <img :src="wr.avatar" style="width: 40px; height: 40px;" class="avatar">
-              </div>
-            </td>
-            <td>
-              <div class="uname" @click="jump(wr.userName)">{{ wr.userName }}</div>
-              <div>AC: {{ wr.acNum }}</div>
-            </td>
-          </tr>
-        </table>
+      <div id="ranks">
+        <div id="Top3">
+          <div v-for="i in Math.min(3, weekRank.length)" @click="jump(weekRank[i - 1].userName)" class="pre">
+            <div class="preimg">
+              <img :src="weekRank[i - 1].avatar" style="width: 50px; height: 50px;" class="avatar">
+            </div>
+            <div class="uname" v-html="weekRank[i - 1].userSpan"></div>
+          </div>
+        </div>
+        <div id="alls">
+          <table>
+            <tr v-for="wr, indexs in weekRank" v-if="indexs + 1 > 3">
+              <td style="width: 30px; text-align: center;">{{ indexs + 1 }}</td>
+              <td style="width: 50px; height: 60px;">
+                <div style="height: 100%; display: flex; align-items: center;" @click="jump(wr.userName)">
+                  <img :src="wr.avatar" style="width: 40px; height: 40px;" class="avatar">
+                </div>
+              </td>
+              <td>
+                <div class="uname" @click="jump(wr.userName)" v-html="wr.userSpan"></div>
+                <div>AC: {{ wr.acNum }}</div>
+              </td>
+            </tr>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -217,7 +222,7 @@
   .uname {
     cursor: pointer;
     width: 60px;
-    color: rgb(255, 161, 22);
+    /* color: rgb(255, 161, 22); */
   }
 
   .pre .uname {
