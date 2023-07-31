@@ -2,46 +2,48 @@
   <div id="header">
     <Menu theme="light" mode="horizontal" @on-select="handleRoute" :active-name="activeMenu" class="oj-menu">
       <div class="logo"><span>{{website.website_name}}</span></div>
-      <Menu-item name="/">
-        <Icon type="home"></Icon>
-        {{$t('m.Home')}}
-      </Menu-item>
-      <Menu-item name="/problem">
-        <Icon type="ios-keypad"></Icon>
-        {{$t('m.NavProblems')}}
-      </Menu-item>
-      <Menu-item name="/contest">
-        <Icon type="trophy"></Icon>
-        {{$t('m.Contests')}}
-      </Menu-item>
-      <Menu-item name="/status">
-        <Icon type="ios-pulse-strong"></Icon>
-        {{$t('m.NavStatus')}}
-      </Menu-item>
-      <Submenu name="rank">
-        <template slot="title">
-          <Icon type="podium"></Icon>
-          {{$t('m.Rank')}}
-        </template>
-        <Menu-item name="/acm-rank">
-          {{$t('m.ACM_Rank')}}
+      <div class="items">
+        <Menu-item name="/">
+          <Icon type="home"></Icon>
+          {{$t('m.Home')}}
         </Menu-item>
-        <Menu-item name="/oi-rank">
-          {{$t('m.OI_Rank')}}
+        <Menu-item name="/problem">
+          <Icon type="ios-keypad"></Icon>
+          {{$t('m.NavProblems')}}
         </Menu-item>
-      </Submenu>
-      <Submenu name="about">
-        <template slot="title">
-          <Icon type="information-circled"></Icon>
-          {{$t('m.About')}}
-        </template>
-        <Menu-item name="/about">
-          {{$t('m.Judger')}}
+        <Menu-item name="/contest">
+          <Icon type="trophy"></Icon>
+          {{$t('m.Contests')}}
         </Menu-item>
-        <Menu-item name="/FAQ">
-          {{$t('m.FAQ')}}
+        <Menu-item name="/status">
+          <Icon type="ios-pulse-strong"></Icon>
+          {{$t('m.NavStatus')}}
         </Menu-item>
-      </Submenu>
+        <Submenu name="rank">
+          <template slot="title">
+            <Icon type="podium"></Icon>
+            {{$t('m.Rank')}}
+          </template>
+          <Menu-item name="/acm-rank">
+            {{$t('m.ACM_Rank')}}
+          </Menu-item>
+          <Menu-item name="/oi-rank">
+            {{$t('m.OI_Rank')}}
+          </Menu-item>
+        </Submenu>
+        <Submenu name="about">
+          <template slot="title">
+            <Icon type="information-circled"></Icon>
+            {{$t('m.About')}}
+          </template>
+          <Menu-item name="/about">
+            {{$t('m.Judger')}}
+          </Menu-item>
+          <Menu-item name="/FAQ">
+            {{$t('m.FAQ')}}
+          </Menu-item>
+        </Submenu>
+      </div>
       <template v-if="!isAuthenticated">
         <div class="btn-menu">
           <Button type="ghost"
@@ -60,8 +62,13 @@
       <template v-else>
         <Dropdown class="drop-menu" @on-click="handleRoute" placement="bottom" trigger="click">
           <Button type="text" class="drop-menu-title">
-            <span v-html="profile.userSpan"></span>
-            <Icon type="arrow-down-b"></Icon>
+            <div class="fixed">
+              <img class="avatar" :src="profile.avatar">
+              <div>
+                <span v-html="profile.userSpan"></span>
+                <Icon type="arrow-down-b"></Icon>
+              </div>
+            </div>
           </Button>
           <Dropdown-menu slot="list">
             <Dropdown-item name="/user-home">{{$t('m.MyHome')}}</Dropdown-item>
@@ -97,10 +104,10 @@
     methods: {
       ...mapActions(['getProfile', 'changeModalStatus']),
       handleRoute (route) {
-        if (route && route.indexOf('admin') < 0) {
+        if (route !== '/admin') {
           this.$router.push(route)
         } else {
-          window.open('/admin/')
+          window.open(route)
         }
       },
       handleBtnClick (mode) {
@@ -129,46 +136,52 @@
 </script>
 
 <style lang="less" scoped>
-  #header::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: -10vw;
-    right: -10vw;
-    background-color: #fff;
-  }
-
   #header {
     min-width: 300px;
     position: fixed;
     top: 0;
-    left: 10%;
+    left: 0;
     height: auto;
-    width: 80%;
+    width: 100%;
     z-index: 1000;
     background-color: #fff;
-    border: 2px solid rgba(0, 0, 0, 0.5);
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
     .oj-menu {
       background: #fdfdfd;
+      height: auto;
+      width: 80%;
+      left: 10%;
     }
 
     .logo {
-      margin-left: 2%;
-      margin-right: 2%;
+      text-align: center;
       font-size: 20px;
       float: left;
+      width: 15%;
       line-height: 60px;
+    }
+
+    .items {
+      position: relative;
     }
 
     .drop-menu {
       float: right;
-      margin-right: 30px;
-      position: absolute;
-      right: 10px;
       &-title {
         font-size: 18px;
+        .fixed {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .avatar {
+          display: block;
+          height: 50px;
+          width: 50px;
+          border-radius: 50%;
+          margin-right: 5px;
+          box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+        }
       }
     }
     .btn-menu {

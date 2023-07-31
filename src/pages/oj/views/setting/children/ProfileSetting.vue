@@ -38,7 +38,7 @@
             <Icon type="arrow-return-right" size="20"></Icon>
           </Button>
           <Button @click="reselect">
-            <Icon type="refresh" size="20"></Icon>
+            <Icon type="close" size="20"></Icon>
           </Button>
           <Button @click="finishCrop">
             <Icon type="checkmark-round" size="20"></Icon>
@@ -133,7 +133,9 @@
           school: '',
           github: '',
           language: ''
-        }
+        },
+        gifsize: 0,
+        imgtype: ''
       }
     },
     mounted () {
@@ -156,8 +158,8 @@
         return true
       },
       checkFileSize (file) {
-        // max size is 2MB
-        if (file.size > 2 * 1024 * 1024) {
+        // max size is 5MB
+        if (file.size > 5 * 1024 * 1024) {
           this.$Notice.warning({
             title: 'Exceed max size limit',
             desc: 'File ' + file.name + ' is too big, you can upload a image up to 2MB in size'
@@ -173,7 +175,15 @@
         }
         let reader = new window.FileReader()
         reader.onload = (e) => {
-          this.avatarOption.imgSrc = e.target.result
+          let imgsrc = e.target.result
+          this.imgtype = file.type
+          this.gifsize = file.size
+          if (this.imgtype === 'image/gif') {
+            this.uploadImgSrc = imgsrc
+            this.uploadModalVisible = true
+          } else {
+            this.avatarOption.imgSrc = imgsrc
+          }
         }
         reader.readAsDataURL(file)
         return false
@@ -203,9 +213,18 @@
         })
       },
       uploadAvatar () {
-        this.$refs.cropper.getCropBlob(blob => {
+        if (this.imgtype === 'image/gif') {
+          let bypeString = window.atob(this.uploadImgSrc.split(',')[1])
+          let mimeString = this.uploadImgSrc.split(',')[0].split(':')[1].split(':')[0]
+          let ab = new ArrayBuffer(bypeString.length)
+          let ia = new Uint8Array(ab)
+          for (let i = 0; i < bypeString.length; i++) {
+            ia[i] = bypeString.charCodeAt(i)
+          }
+          let blob = new window.Blob([ab], {type: mimeString})
+
           let form = new window.FormData()
-          let file = new window.File([blob], 'avatar.' + this.avatarOption.outputType)
+          let file = new window.File([blob], 'avatar.gif')
           form.append('image', file)
           this.loadingUploadBtn = true
           this.$http({
@@ -217,12 +236,35 @@
             this.loadingUploadBtn = false
             this.$success('Successfully set new avatar')
             this.uploadModalVisible = false
-            this.avatarOption.imgSrc = ''
             this.$store.dispatch('getProfile')
+            this.gifsize = 0
+            this.imgtype = ''
+            this.uploadImgSrc = ''
           }, () => {
             this.loadingUploadBtn = false
           })
-        })
+        } else {
+          this.$refs.cropper.getCropBlob(blob => {
+            let form = new window.FormData()
+            let file = new window.File([blob], 'avatar.' + this.avatarOption.outputType)
+            form.append('image', file)
+            this.loadingUploadBtn = true
+            this.$http({
+              method: 'post',
+              url: 'upload_avatar',
+              data: form,
+              headers: {'content-type': 'multipart/form-data'}
+            }).then(res => {
+              this.loadingUploadBtn = false
+              this.$success('Successfully set new avatar')
+              this.uploadModalVisible = false
+              this.avatarOption.imgSrc = ''
+              this.$store.dispatch('getProfile')
+            }, () => {
+              this.loadingUploadBtn = false
+            })
+          })
+        }
       },
       updateProfile () {
         this.loadingSaveBtn = true

@@ -230,8 +230,9 @@
     text-align: center;
     overflow: hidden;
     text-overflow: ellipsis;
-    background-color: white;
+    background-color: rgb(255, 255, 255);
     border-radius: 5px;
+    border: 0.5px solid #9d9c99;
     opacity: .9;
     box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.08);
   }

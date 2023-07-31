@@ -8,7 +8,7 @@
               <div class="avatar-container">
                 <img class="avatar" :src="profile.avatar"/>
                 <div class="avatar-mask">
-                  <a @click.stop="goRoute({name: 'profile-setting'})">
+                  <a @click.stop="lookOver">
                     <div class="mask-content">
                       <Icon type="camera" size="30"></Icon>
                       <p class="text">change avatar</p>
@@ -30,6 +30,15 @@
         </div>
       </div>
     </Card>
+    
+    <Modal v-model="look_over">
+      <div style="display: flex; justify-content: center;">
+        <img :src="profile.avatar"/>
+      </div>
+      <div slot="footer">
+        <Button type="ghost" @click="lookOver">{{$t('m.Close')}}</Button>
+      </div>
+    </Modal>
   </div>
 </template>
 <script>
@@ -37,9 +46,17 @@
 
   export default {
     name: 'profile',
+    data () {
+      return {
+        look_over: false
+      }
+    },
     methods: {
       goRoute (routePath) {
         this.$router.push(routePath)
+      },
+      lookOver () {
+        this.look_over = !this.look_over
       }
     },
     computed: {
@@ -80,7 +97,8 @@
             max-width: 100%;
             display: block;
             border-radius: @avatar-radius;
-            box-shadow: 0px 0px 1px 0px;
+            box-shadow: 0px 0px 5px rgba(117, 117, 117, 0.5);
+            border: 5px solid #dddee1;
           }
           .avatar-mask {
             transition: opacity .2s ease-in;
