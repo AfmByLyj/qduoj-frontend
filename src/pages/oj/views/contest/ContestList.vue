@@ -141,7 +141,6 @@
       },
       getContestList (page = 1) {
         let offset = (page - 1) * this.limit
-        console.log(1)
         api.getContestList(offset, this.limit, this.query).then((res) => {
           this.contests = res.data.data.results
           this.total = res.data.data.total

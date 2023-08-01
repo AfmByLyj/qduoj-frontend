@@ -6,7 +6,7 @@
     <Card :padding="100">
       <div v-if="profile.user">
         <p style="margin-top: -10px">
-          <span v-if="profile.userSpan" class="emphasis" v-html="profile.userSpan"></span>
+          <span class="emphasis" v-html="profile.userSpan"></span>
           <span v-if="profile.school">@{{profile.school}}</span>
         </p>
         <p style="font-size: 1.2em;">
@@ -32,6 +32,13 @@
             <p class="emphasis">{{profile.total_score}}</p>
           </div>
         </div>
+        <hr id="split"/>
+
+        <div id="echarts" v-if="optionshow">
+          <ECharts :options="option" ref="chart" auto-resize></ECharts>
+        </div>
+        <hr id="split"/>
+
         <div id="problems">
           <div v-if="problems.length">{{$t('m.List_Solved_Problems')}}
             <Poptip v-if="refreshVisible" trigger="hover" placement="right-start">
@@ -74,7 +81,42 @@
       return {
         username: '',
         profile: {},
-        problems: []
+        problems: [],
+        optionshow: false,
+        option: {
+          tooltip: {
+            trigger: 'axis'
+          },
+          xAxis: {
+            type: 'category',
+            data: [],
+            axisLabel: {
+              initval: 1
+            }
+          },
+          yAxis: {
+            type: 'value'
+          },
+          series: [
+            {
+              name: 'RL score',
+              data: [],
+              type: 'line',
+              markPoint: {
+                data: [{
+                  xAxis: '',
+                  yAxis: 0,
+                  symbol: 'pin',
+                  symbolSize: 50,
+                  animation: true,
+                  itemStyle: {
+                    color: '#f00'
+                  }
+                }]
+              }
+            }
+          ]
+        }
       }
     },
     mounted () {
@@ -87,20 +129,43 @@
         api.getUserInfo(this.username).then(res => {
           this.changeDomTitle({title: res.data.data.user.username})
           this.profile = res.data.data
+          this.setEcharts(this.profile.RL_get.date)
           this.getSolvedProblems()
           let registerTime = time.utcToLocal(this.profile.user.create_time, 'YYYY-MM-D')
           console.log('The guy registered at ' + registerTime + '.')
         })
+      },
+      setEcharts (data, initval = 1000) {
+        if (!data) return
+        let date = Object.keys(data)
+        date.sort()
+        let yval = []
+        let xval = []
+        for (let k = 0; k < date.length; k++) {
+          initval += data[date[k]]
+          xval.push(date[k])
+          yval.push(initval)
+        }
+        this.option.xAxis.data = xval
+        this.option.xAxis.axisLabel.initval = Math.ceil(xval.length / 5) - 1
+        this.option.series[0].data = yval
+        this.option.series[0].markPoint.data[0].xAxis = xval[xval.length - 1]
+        this.option.series[0].markPoint.data[0].yAxis = yval[yval.length - 1]
+        this.optionshow = true
       },
       getSolvedProblems () {
         let ACMProblems = this.profile.acm_problems_status.problems || {}
         let OIProblems = this.profile.oi_problems_status.problems || {}
         // todo oi problems
         let ACProblems = []
+        let stAC = {}
         for (let problems of [ACMProblems, OIProblems]) {
           Object.keys(problems).forEach(problemID => {
             if (problems[problemID]['status'] === 0) {
-              ACProblems.push(problems[problemID]['_id'])
+              if (!stAC[problems[problemID]['_id']]) {
+                ACProblems.push(problems[problemID]['_id'])
+                stAC[problems[problemID]['_id']] = true
+              }
             }
           })
         }
@@ -160,6 +225,10 @@
     .emphasis {
       font-size: 20px;
       font-weight: 600;
+    }
+    #echarts {
+      display: flex;
+      justify-content: center;
     }
     #split {
       margin: 20px auto;

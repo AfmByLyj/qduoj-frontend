@@ -12,6 +12,7 @@ import {
   Problem,
   ProblemList,
   ResetPassword,
+  RLRank,
   SubmissionDetails,
   SubmissionList,
   UserHome
@@ -118,6 +119,12 @@ export default [
     path: '/acm-rank',
     meta: {title: 'ACM Rankings'},
     component: ACMRank
+  },
+  {
+    name: 'rl-rank',
+    path: '/rl-rank',
+    meta: {title: 'RL score Rankings'},
+    component: RLRank
   },
   {
     name: 'oi-rank',

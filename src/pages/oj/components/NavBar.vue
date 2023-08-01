@@ -24,12 +24,15 @@
             <Icon type="podium"></Icon>
             {{$t('m.Rank')}}
           </template>
+          <Menu-item name="/rl-rank">
+            {{$t('m.RL_Rank')}}
+          </Menu-item>
           <Menu-item name="/acm-rank">
             {{$t('m.ACM_Rank')}}
           </Menu-item>
-          <Menu-item name="/oi-rank">
+          <!-- <Menu-item name="/oi-rank">
             {{$t('m.OI_Rank')}}
-          </Menu-item>
+          </Menu-item> -->
         </Submenu>
         <Submenu name="about">
           <template slot="title">

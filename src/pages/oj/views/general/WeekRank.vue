@@ -51,10 +51,6 @@
           tooltip: {
             trigger: 'axis'
           },
-          grid: {
-            x: '3%',
-            x2: '3%'
-          },
           toolbox: {
             show: true,
             feature: {

@@ -260,5 +260,9 @@ export const m = {
   UserHomeIntro: 'The guy is so lazy that has not solved any problem yet.',
   subStatus: 'Test result',
   AcNum: 'Ac Submissions',
-  WeeklySubmissionRank: 'Weekly submission ranking'
+  WeeklySubmissionRank: 'Weekly submission ranking',
+  RL_Rank: 'RL Rank',
+  avatar: 'avatar',
+  Trend: 'Trend',
+  RL_Ranklist: 'RL Ranklist'
 }

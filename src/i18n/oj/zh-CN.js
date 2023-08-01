@@ -260,5 +260,9 @@ export const m = {
   UserHomeIntro: '这个家伙太懒了，还没有做题呢...',
   subStatus: '测试点信息',
   AcNum: '通过的提交',
-  WeeklySubmissionRank: '7日通过提交数前10榜(数量相同按昵称降序排列)'
+  WeeklySubmissionRank: '7日通过提交数前10榜(数量相同按昵称降序排列)',
+  RL_Rank: 'RL 排名',
+  avatar: '头像',
+  Trend: '趋势',
+  RL_Ranklist: 'RL 排行榜'
 }

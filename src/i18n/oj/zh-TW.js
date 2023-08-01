@@ -260,5 +260,9 @@ export const m = {
   UserHomeIntro: '這個使用者尚未解題...',
   subStatus: '測試點資訊',
   AcNum: '通過的提交',
-  WeeklySubmissionRank: '7日提交榜'
+  WeeklySubmissionRank: '7日提交榜',
+  RL_Rank: 'RL 排名',
+  avatar: '頭像',
+  Trend: '趨勢',
+  RL_Ranklist: 'RL 排行榜'
 }

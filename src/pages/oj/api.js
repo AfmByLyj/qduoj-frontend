@@ -281,6 +281,11 @@ export default {
     return ajax('user_Drank', 'get', {
       params
     })
+  },
+  getRLRank (params) {
+    return ajax('RL_rank', 'get', {
+      params
+    })
   }
 }
 
