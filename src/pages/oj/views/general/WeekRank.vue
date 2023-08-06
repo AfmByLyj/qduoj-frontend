@@ -13,7 +13,7 @@
             <div class="preimg">
               <img :src="weekRank[i - 1].avatar" style="width: 50px; height: 50px;" class="avatar">
             </div>
-            <div class="uname" v-html="weekRank[i - 1].userSpan"></div>
+            <div class="uname" v-html="weekRank[i - 1].userSpan.replace('|', weekRank[i - 1].userName)"></div>
           </div>
         </div>
         <div id="alls">
@@ -26,7 +26,7 @@
                 </div>
               </td>
               <td>
-                <div class="uname" @click="jump(wr.userName)" v-html="wr.userSpan"></div>
+                <div class="uname" @click="jump(wr.userName)" v-html="wr.userSpan.replace('|', wr.userName)"></div>
                 <div>AC: {{ wr.acNum }}</div>
               </td>
             </tr>

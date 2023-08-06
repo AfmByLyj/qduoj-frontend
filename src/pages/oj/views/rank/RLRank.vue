@@ -1,29 +1,68 @@
 <template>
-  <Row type="flex" justify="space-around">
-    <Col :span="22">
-    <Panel :padding="10">
-      <div slot="title">{{$t('m.RL_Ranklist')}}</div>
-      <div class="echarts">
-        <ECharts :options="options" ref="chart" auto-resize></ECharts>
-      </div>
-    </Panel>
-    <Table :data="dataRank" :columns="columns" :loading="loadingTable" size="large"></Table>
-    <Pagination :total="total" :page-size.sync="limit" :current.sync="page"
-                @on-change="getRankData" show-sizer
-                @on-page-size-change="getRankData(1)"></Pagination>
-    </Col>
-  </Row>
+  <div>
+    <Row type="flex" justify="space-around">
+      <Col :span="22">
+      <Panel :padding="10">
+        <div slot="title" class="titles">
+          <span>{{$t('m.RL_Ranklist')}}</span>
+          <div id="helpIcon" 
+          @mouseover="tipBox = true"
+          @mouseleave="tipBox = false"
+          @click="RLbox=true">
+            <Icon type="help" size="12"></Icon>
+          </div>
+          <div class="tipBox" v-show="tipBox">
+            What is RL rule?
+          </div>
+        </div>
+        <div class="Rank">
+          <table>
+            <thead>
+              <tr>
+                <th width="10%">{{ $t('m.RL_Rank') }}</th>
+                <th width="30%">{{ $t('m.Username') }}</th>
+                <th width="20%">{{ $t('m.mood') }}</th>
+                <th width="30%">{{ $t('m.UserHomeSolved') }}</th>
+                <th width="10%">RL</th>
+              </tr>
+            </thead>
+            <tbody align="center">
+              <tr v-for="data, idx in dataRank">
+                <td width="10%">
+                  <span>{{ index[idx] }}</span>
+                </td>
+                <td width="30%"><span v-html="data.userSpan.replace('|', data.user.username)" style="font-size: 16px;"></span></td>
+                <td width="20%" height="45px">{{ data.mood }}</td>
+                <td width="30%">{{ data.accepted_number }}</td>
+                <td width="10%"><span v-html="data.userSpan.replace('|', data.RL_score)"></span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </Panel>
+      <Pagination :total="total" :page-size.sync="limit" :current.sync="page"
+                  @on-change="getRankData" show-sizer
+                  @on-page-size-change="getRankData(1)"></Pagination>
+      </Col>
+    </Row>
+
+    <Modal v-model="RLbox" :width="600">
+      <RLRule></RLRule>
+    </Modal>
+  </div>
 </template>
 
 <script>
   import api from '@oj/api'
   import Pagination from '@oj/components/Pagination'
-  import utils from '@/utils/utils'
+  import RLRule from '../../components/RLRule.vue'
+  // import utils from '@/utils/utils'
 
   export default {
     name: 'rl-rank',
     components: {
-      Pagination
+      Pagination,
+      RLRule
     },
     data () {
       return {
@@ -32,124 +71,9 @@
         total: 0,
         loadingTable: false,
         dataRank: [],
-        columns: [
-          {
-            align: 'center',
-            width: 60,
-            render: (h, params) => {
-              return h('span', {}, params.index + (this.page - 1) * this.limit + 1)
-            }
-          },
-          {
-            title: this.$i18n.t('m.User_User'),
-            align: 'center',
-            render: (h, params) => {
-              return h('div', {
-                style: {
-                  'display': 'flex',
-                  'align-items': 'center',
-                  'justify-content': 'center'
-                }
-              }, [
-                h('img', {
-                  style: {
-                    'height': '50px',
-                    'width': '50px',
-                    'border-radius': '50%',
-                    'box-shadow': '0 0 5px rgba(0, 0, 0, 0.5)'
-                  },
-                  attrs: {
-                    src: params.row.avatar
-                  }
-                }),
-                h('div', {
-                  style: {
-                    'margin-left': '20px',
-                    'font-size': '16px',
-                    'font-weight': '600'
-                  },
-                  domProps: {
-                    innerHTML: params.row.userSpan
-                  },
-                  on: {
-                    click: () => {
-                      this.$router.push({
-                        name: 'user-home',
-                        query: { username: params.row.user.username }
-                      })
-                    }
-                  }
-                })
-              ])
-            }
-          },
-          {
-            title: this.$i18n.t('m.mood'),
-            align: 'center',
-            key: 'mood'
-          },
-          {
-            title: this.$i18n.t('m.Score'),
-            align: 'center',
-            key: 'RL_score'
-          },
-          {
-            title: this.$i18n.t('m.Trend'),
-            align: 'center',
-            render: (h, params) => {
-              let t = this.getTrend(params.row.RL_get.date)
-              return h('span', {
-                style: {
-                  'color': t[1],
-                  'font-size': '16px',
-                  'font-weight': '600'
-                }
-              }, t[0])
-            }
-          }
-        ],
-        options: {
-          tooltip: {
-            trigger: 'axis'
-          },
-          toolbox: {
-            show: true,
-            feature: {
-              dataView: {show: true, readOnly: true},
-              magicType: {show: true, type: ['line', 'bar']},
-              saveAsImage: {show: true}
-            },
-            right: '10%'
-          },
-          calculable: true,
-          xAxis: [
-            {
-              type: 'category',
-              data: ['root'],
-              axisLabel: {
-                interval: 0,
-                showMinLabel: true,
-                showMaxLabel: true,
-                align: 'center',
-                formatter: (value, index) => {
-                  return utils.breakLongWords(value, 10)
-                }
-              }
-            }
-          ],
-          yAxis: [
-            {
-              type: 'value'
-            }
-          ],
-          series: [
-            {
-              name: this.$i18n.t('m.Score'),
-              type: 'bar',
-              data: [0]
-            }
-          ]
-        }
+        index: [],
+        tipBox: false,
+        RLbox: false
       }
     },
     mounted () {
@@ -158,30 +82,18 @@
     methods: {
       getRankData (page) {
         let offset = (page - 1) * this.limit
-        let bar = this.$refs.chart
-        bar.showLoading({maskColor: 'rgba(250, 250, 250, 0.8)'})
         this.loadingTable = true
         api.getRLRank(offset, this.limit).then(res => {
           this.loadingTable = false
-          if (page === 1) {
-            this.changeCharts(res.data.data.results.slice(0, 10))
-          }
           this.total = res.data.data.total
           this.dataRank = res.data.data.results
-          bar.hideLoading()
+          this.index = [offset + 1]
+          for (let i = 1; i < this.dataRank.length; i++) {
+            this.index.push(this.index.slice(-1)[0] + (this.dataRank[i].RL_score !== this.dataRank[i - 1].RL_score ? 1 : 0))
+          }
         }).catch(() => {
           this.loadingTable = false
-          bar.hideLoading()
         })
-      },
-      changeCharts (rankData) {
-        let [usernames, acData] = [[], []]
-        rankData.forEach(ele => {
-          usernames.push(ele.user.username)
-          acData.push(ele.RL_score)
-        })
-        this.options.xAxis[0].data = usernames
-        this.options.series[0].data = acData
       },
       getTrend (data) {
         if (!data) return ['0', 'black']
@@ -198,9 +110,62 @@
 </script>
 
 <style scoped lang="less">
-  .echarts {
-    margin: 0 auto;
-    width: 95%;
-    height: 400px;
+.titles {
+  height: 20px;
+}
+
+#helpIcon {
+  position: relative;
+  top: -30px;
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  border-width: 2px;
+  border-color: black;
+  border-style: solid;
+  left: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.tipBox {
+  position: absolute;
+  height: 25px;
+  width: 150px;
+  border-radius: 5px;
+  border: 2px solid #7a7a7a;
+  background-color: rgb(240, 240, 240);
+  box-shadow: 0 5px 5px rgba(125, 125, 125, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-shadow: 0 0 25px #7a7a7a;
+  font-size: 16px;
+  font-weight: bolder;
+  top: 0px;
+  left: 150px;
+}
+
+.Rank {
+  table {
+    border: 1px dashed #ccc;
+    tr {
+      th {
+        border: 1px dashed #ccc;
+      }
+
+      td {
+        border: 1px dashed #ccc;
+      }
+    }
+    border-collapse: collapse;
   }
+}
+
+.rankTop {
+  background: url(https://static.nowcoder.com/images/img/platform/rating-num.png) no-repeat;
+}
+
 </style>

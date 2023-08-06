@@ -68,7 +68,7 @@
             <div class="fixed">
               <img class="avatar" :src="profile.avatar">
               <div>
-                <span v-html="profile.userSpan"></span>
+                <span v-html="profile.userSpan.replace('|', profile.user.username)"></span>
                 <Icon type="arrow-down-b"></Icon>
               </div>
             </div>
@@ -77,7 +77,7 @@
             <Dropdown-item name="/user-home">{{$t('m.MyHome')}}</Dropdown-item>
             <Dropdown-item name="/status?myself=1">{{$t('m.MySubmissions')}}</Dropdown-item>
             <Dropdown-item name="/setting/profile">{{$t('m.Settings')}}</Dropdown-item>
-            <Dropdown-item v-if="isAdminRole" name="/admin">{{$t('m.Management')}}</Dropdown-item>
+            <Dropdown-item v-if="isAdminRole" name="/admin/">{{$t('m.Management')}}</Dropdown-item>
             <Dropdown-item divided name="/logout">{{$t('m.Logout')}}</Dropdown-item>
           </Dropdown-menu>
         </Dropdown>
@@ -107,7 +107,7 @@
     methods: {
       ...mapActions(['getProfile', 'changeModalStatus']),
       handleRoute (route) {
-        if (route !== '/admin') {
+        if (route !== '/admin/') {
           this.$router.push(route)
         } else {
           window.open(route)

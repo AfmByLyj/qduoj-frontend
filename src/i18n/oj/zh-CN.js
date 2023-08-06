@@ -264,5 +264,14 @@ export const m = {
   RL_Rank: 'RL 排名',
   avatar: '头像',
   Trend: '趋势',
-  RL_Ranklist: 'RL 排行榜'
+  RL_Ranklist: 'RL 排行榜',
+  RL_Score: 'RL分数范围',
+  Easy_problem: '简单题目',
+  Mid_problem: '中等题目',
+  High_problem: '困难题目',
+  Contest10T: '比赛前10名',
+  Contest10L: '比赛后10名',
+  ContestM: '比赛其余名次',
+  tipContest: '“x”为比赛位次。',
+  Problem_Submissions: '题目提交'
 }

@@ -264,5 +264,14 @@ export const m = {
   RL_Rank: 'RL Rank',
   avatar: 'avatar',
   Trend: 'Trend',
-  RL_Ranklist: 'RL Ranklist'
+  RL_Ranklist: 'RL Ranklist',
+  RL_Score: 'RL score range',
+  Easy_problem: 'Low problem',
+  Mid_problem: 'Mid problem',
+  High_problem: 'High problem',
+  Contest10T: 'Top 10 of the contest',
+  Contest10L: 'Last 10 of the contest',
+  ContestM: 'Middle of the contest',
+  tipContest: '\'x\' represents the contest ranking.',
+  Problem_Submissions: 'Problem submissions'
 }

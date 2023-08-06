@@ -1,6 +1,6 @@
 <template>
   <Panel shadow :padding="10">
-    <Pagination v-if="!isContest"
+    <Pagination v-if="!isContest && total !== 0"
                   key="page"
                   :total="total"
                   :page-size="limit"
