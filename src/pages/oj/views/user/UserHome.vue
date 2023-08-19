@@ -6,7 +6,8 @@
     <Card :padding="100">
       <div v-if="profile.user">
         <p style="margin-top: -10px">
-          <span class="emphasis" v-html="profile.userSpan.replace('|', profile.user.username)"></span>
+          <span class="emphasis" v-if="profile.userSpan !== ''" v-html="profile.userSpan.replace('|', profile.user.username)"></span>
+          <span class="emphasis" v-else>{{ profile.user.username }}</span>
           <span v-if="profile.school">@{{profile.school}}</span>
         </p>
         <p style="font-size: 1.2em;">

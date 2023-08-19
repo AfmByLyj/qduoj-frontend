@@ -528,7 +528,8 @@
           problem_id: this.problem.id,
           language: this.language,
           code: this.code,
-          contest_id: this.contestID
+          contest_id: this.contestID,
+          klot: api.getNowKlot()
         }
         if (this.captchaRequired) {
           data.captcha = this.captchaCode

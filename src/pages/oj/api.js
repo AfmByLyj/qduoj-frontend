@@ -8,6 +8,22 @@ axios.defaults.xsrfHeaderName = 'X-CSRFToken'
 axios.defaults.xsrfCookieName = 'csrftoken'
 
 export default {
+  getNowKlot () {
+    let offsetDict = ['2b', 'oc', 'AF', 'Xs', 'aT', 'a0', '1Ar', 'x0t', 'qw!', '!r', '2b']
+    let times = new Date().getTime()
+    let timeSSA = times.toString()
+    let res = ''
+    for (let i of timeSSA) res += offsetDict[parseInt(i)]
+    return res
+  },
+  isValidUrl (url) {
+    let data = {
+      url: url
+    }
+    return ajax('isVaildUrl', 'post', {
+      data
+    })
+  },
   getWebsiteConf (params) {
     return ajax('website', 'get', {
       params
@@ -284,6 +300,16 @@ export default {
   },
   getRLRank (params) {
     return ajax('RL_rank', 'get', {
+      params
+    })
+  },
+  getAnimeList (params) {
+    return ajax('anime', 'get', {
+      params
+    })
+  },
+  getAnimeDetail (params) {
+    return ajax('animeDetail', 'get', {
       params
     })
   }

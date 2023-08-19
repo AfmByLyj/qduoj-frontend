@@ -6,6 +6,7 @@ import FAQ from './help/FAQ.vue'
 import NotFound from './general/404.vue'
 import Home from './general/Home.vue'
 import Announcements from './general/Announcements.vue'
+import animeList from './anime/animeList.vue'
 
 // Grouping Components in the Same Chunk
 const SubmissionList = () => import(/* webpackChunkName: "submission" */ '@oj/views/submission/SubmissionList.vue')
@@ -22,7 +23,7 @@ const Problem = () => import(/* webpackChunkName: "Problem" */ '@oj/views/proble
 
 export {
   Home, NotFound, Announcements,
-  Logout, UserHome, About, FAQ,
+  Logout, UserHome, About, FAQ, animeList,
   ProblemList, Problem,
   ACMRank, OIRank, RLRank,
   SubmissionList, SubmissionDetails,

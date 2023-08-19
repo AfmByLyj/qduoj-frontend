@@ -13,7 +13,10 @@
             <div class="preimg">
               <img :src="weekRank[i - 1].avatar" style="width: 50px; height: 50px;" class="avatar">
             </div>
-            <div class="uname" v-html="weekRank[i - 1].userSpan.replace('|', weekRank[i - 1].userName)"></div>
+            <div class="uname">
+              <span v-if="weekRank[i - 1].userSpan !== ''" v-html="weekRank[i - 1].userSpan.replace('|', weekRank[i - 1].userName)"></span>
+              <span v-else>{{ weekRank[i - 1].userName }}</span>
+            </div>
           </div>
         </div>
         <div id="alls">
@@ -26,7 +29,10 @@
                 </div>
               </td>
               <td>
-                <div class="uname" @click="jump(wr.userName)" v-html="wr.userSpan.replace('|', wr.userName)"></div>
+                <div class="uname" @click="jump(wr.userName)">
+                  <span v-if="wr.userSpan !== ''" v-html="wr.userSpan.replace('|', wr.userName)"></span>
+                  <span v-else>{{ wr.userName }}</span>
+                </div>
                 <div>AC: {{ wr.acNum }}</div>
               </td>
             </tr>
@@ -110,7 +116,8 @@
         api.getDayRank(dayFrame).then(res => {
           let data = res.data.data
           if (this.weekRank.length === 0) {
-            this.weekRank = data.rank
+            this.weekRank = []
+            for (let i = 0; i < Math.min(data.rank.length, 10); i++) this.weekRank.push(data.rank[i])
             this.weekTotal = data.total
           }
           this.dailytotal = data.data

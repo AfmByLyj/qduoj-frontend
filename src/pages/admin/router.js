@@ -2,7 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 // 引入 view 组件
 import { Announcement, Conf, Contest, ContestList, Home, JudgeServer, Login,
-  Problem, ProblemList, User, PruneTestCase, Dashboard, ProblemImportOrExport } from './views'
+  Problem, ProblemList, User, PruneTestCase, Dashboard, ProblemImportOrExport, anime, animeList, animeEdit } from './views'
+// import { Router } from 'express'
 Vue.use(VueRouter)
 
 export default new VueRouter({
@@ -103,6 +104,27 @@ export default new VueRouter({
           path: '/contest/:contestId/problem/:problemId/edit',
           name: 'edit-contest-problem',
           component: Problem
+        },
+        {
+          path: '/anime',
+          name: 'creatAnime',
+          component: anime,
+          props: (route) => ({type: route.query.type})
+        },
+        {
+          path: '/animeList',
+          name: 'animeList',
+          component: animeList,
+          props: (route) => ({
+            type: route.query.type,
+            page: route.query.page
+          })
+        },
+        {
+          path: '/animeEdit',
+          name: 'animeEdit',
+          component: animeEdit,
+          props: (route) => ({id: route.query.id})
         }
       ]
     },

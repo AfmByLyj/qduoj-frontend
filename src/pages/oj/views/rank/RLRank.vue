@@ -31,10 +31,16 @@
                 <td width="10%">
                   <span>{{ index[idx] }}</span>
                 </td>
-                <td width="30%"><span v-html="data.userSpan.replace('|', data.user.username)" style="font-size: 16px;"></span></td>
+                <td width="30%">
+                  <span v-if="data.userSpan !== ''" v-html="data.userSpan.replace('|', data.user.username)" style="font-size: 16px;"></span>
+                  <span v-else style="font-size: 16px;">{{ data.user.username }}</span>
+                </td>
                 <td width="20%" height="45px">{{ data.mood }}</td>
                 <td width="30%">{{ data.accepted_number }}</td>
-                <td width="10%"><span v-html="data.userSpan.replace('|', data.RL_score)"></span></td>
+                <td width="10%">
+                  <span v-if="data.userSpan !== ''" v-html="data.userSpan.replace('|', data.RL_score)"></span>
+                  <span v-else>{{ data.RL_score }}</span>
+                </td>
               </tr>
             </tbody>
           </table>

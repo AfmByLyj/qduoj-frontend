@@ -190,7 +190,7 @@
             <el-form-item :label="$t('m.Type')">
               <el-radio-group v-model="problem.rule_type" :disabled="disableRuleType">
                 <el-radio label="ACM">ACM</el-radio>
-                <el-radio label="OI">OI</el-radio>
+                <!-- <el-radio label="OI">OI</el-radio> -->
               </el-radio-group>
             </el-form-item>
           </el-col>
@@ -212,7 +212,7 @@
             <el-form-item :label="$t('m.IOMode')">
               <el-radio-group v-model="problem.io_mode.io_mode">
                 <el-radio label="Standard IO">Standard IO</el-radio>
-                <el-radio label="File IO">File IO</el-radio>
+                <!-- <el-radio label="File IO">File IO</el-radio> -->
               </el-radio-group>
             </el-form-item>
           </el-col>

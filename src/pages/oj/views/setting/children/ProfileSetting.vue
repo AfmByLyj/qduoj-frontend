@@ -162,7 +162,7 @@
         if (file.size > 5 * 1024 * 1024) {
           this.$Notice.warning({
             title: 'Exceed max size limit',
-            desc: 'File ' + file.name + ' is too big, you can upload a image up to 2MB in size'
+            desc: 'File ' + file.name + ' is too big, you can upload a image up to 5MB in size'
           })
           return false
         }

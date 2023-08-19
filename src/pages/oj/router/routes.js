@@ -15,8 +15,11 @@ import {
   RLRank,
   SubmissionDetails,
   SubmissionList,
-  UserHome
+  UserHome,
+  animeList
 } from '../views'
+
+import animeDetail from '@oj/views/anime/anime.vue'
 
 import * as Contest from '@oj/views/contest'
 import * as Setting from '@oj/views/setting'
@@ -27,6 +30,27 @@ export default [
     path: '/',
     meta: {title: 'Home'},
     component: Home
+  },
+  {
+    name: 'anime',
+    path: '/anime',
+    meta: {title: 'Anime'},
+    component: animeList,
+    props: (route) => ({
+      type: route.query.type
+    })
+  },
+  {
+    name: 'animeDetail',
+    path: '/animeDetail',
+    meta: {title: 'Anime detail'},
+    component: animeDetail,
+    props: (route) => ({
+      type: route.query.type,
+      ep: route.query.ep,
+      load: route.query.load,
+      id: route.query.id
+    })
   },
   {
     name: 'logout',

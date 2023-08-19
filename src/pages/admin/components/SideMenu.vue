@@ -25,6 +25,11 @@
       <el-menu-item index="/contest">{{$t('m.Contest_List')}}</el-menu-item>
       <el-menu-item index="/contest/create">{{$t('m.Create_Contest')}}</el-menu-item>
     </el-submenu>
+    <el-submenu index="anime">
+      <template slot="title"><i class="el-icon-video-camera-solid"></i>Anime</template>
+      <el-menu-item index="/anime">Create</el-menu-item>
+      <el-menu-item index="/animeList?page=1">Anime List</el-menu-item>
+    </el-submenu>
   </el-menu>
 </template>
 

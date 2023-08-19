@@ -19,6 +19,10 @@
           <Icon type="ios-pulse-strong"></Icon>
           {{$t('m.NavStatus')}}
         </Menu-item>
+        <Menu-item name="/anime">
+          <Icon type="social-vimeo"></Icon>
+          Anime
+        </Menu-item>
         <Submenu name="rank">
           <template slot="title">
             <Icon type="podium"></Icon>
@@ -68,7 +72,8 @@
             <div class="fixed">
               <img class="avatar" :src="profile.avatar">
               <div>
-                <span v-html="profile.userSpan.replace('|', profile.user.username)"></span>
+                <span v-if="profile.userSpan !== ''" v-html="profile.userSpan.replace('|', profile.user.username)"></span>
+                <span v-else>{{ profile.user.username }}</span>
                 <Icon type="arrow-down-b"></Icon>
               </div>
             </div>
@@ -77,7 +82,7 @@
             <Dropdown-item name="/user-home">{{$t('m.MyHome')}}</Dropdown-item>
             <Dropdown-item name="/status?myself=1">{{$t('m.MySubmissions')}}</Dropdown-item>
             <Dropdown-item name="/setting/profile">{{$t('m.Settings')}}</Dropdown-item>
-            <Dropdown-item v-if="isAdminRole" name="/admin/">{{$t('m.Management')}}</Dropdown-item>
+            <Dropdown-item v-if="isAdminRole" name="/admin">{{$t('m.Management')}}</Dropdown-item>
             <Dropdown-item divided name="/logout">{{$t('m.Logout')}}</Dropdown-item>
           </Dropdown-menu>
         </Dropdown>
@@ -107,10 +112,10 @@
     methods: {
       ...mapActions(['getProfile', 'changeModalStatus']),
       handleRoute (route) {
-        if (route !== '/admin/') {
+        if (route && route.indexOf('admin') < 0) {
           this.$router.push(route)
         } else {
-          window.open(route)
+          window.open('/admin/')
         }
       },
       handleBtnClick (mode) {
